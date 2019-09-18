@@ -10,10 +10,10 @@ import (
 	"sort"
 	"sync"
 
-	"github.com/cweill/gotests/internal/goparser"
-	"github.com/cweill/gotests/internal/input"
-	"github.com/cweill/gotests/internal/models"
-	"github.com/cweill/gotests/internal/output"
+	"github.com/maelvls/gotests/internal/goparser"
+	"github.com/maelvls/gotests/internal/input"
+	"github.com/maelvls/gotests/internal/models"
+	"github.com/maelvls/gotests/internal/output"
 )
 
 // Options provides custom filters and parameters for generating tests.

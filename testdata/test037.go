@@ -1,6 +1,6 @@
 package testdata
 
-import "github.com/cweill/gotests"
+import "github.com/maelvls/gotests"
 
 type someIndirectImportedStruct gotests.Options
 

@@ -1,6 +1,7 @@
 package render
 
-//go:generate esc -o bindata/esc.go -pkg=bindata templates
+//go:generate sh -c "GO111MODULE=on go get github.com/mjibson/esc@v0.2.0"
+//go:generate sh -c "GO111MODULE=on go run github.com/mjibson/esc -o bindata/esc.go -pkg=bindata templates"
 import (
 	"fmt"
 	"io"

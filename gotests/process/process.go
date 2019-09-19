@@ -40,37 +40,38 @@ type Options struct {
 // Generates tests for the Go files defined in args with the given options.
 // Logs information and errors to out. By default outputs generated tests to
 // out unless specified by opt.
-func Run(out io.Writer, args []string, opts *Options) {
+func Run(out io.Writer, args []string, opts *Options) error {
 	if opts == nil {
 		opts = &Options{}
 	}
-	opt := parseOptions(out, opts)
-	if opt == nil {
-		return
+	opt, err := parseOptions(opts)
+	if err != nil {
+		return fmt.Errorf("parsing flags: %v", err)
 	}
+
 	if len(args) == 0 {
-		fmt.Fprintln(out, specifyFileMessage)
-		return
+		return fmt.Errorf(specifyFileMessage)
 	}
 	for _, path := range args {
-		generateTests(out, path, opts.WriteOutput, opt)
+		err = generateTests(out, path, opts.WriteOutput, opt)
+		if err != nil {
+			return fmt.Errorf("%s: %v", path, err)
+		}
 	}
+	return nil
 }
 
-func parseOptions(out io.Writer, opt *Options) *gotests.Options {
+func parseOptions(opt *Options) (*gotests.Options, error) {
 	if opt.OnlyFuncs == "" && opt.ExclFuncs == "" && !opt.ExportedFuncs && !opt.AllFuncs {
-		fmt.Fprintln(out, specifyFlagMessage)
-		return nil
+		return nil, fmt.Errorf(specifyFlagMessage)
 	}
 	onlyRE, err := parseRegexp(opt.OnlyFuncs)
 	if err != nil {
-		fmt.Fprintln(out, "Invalid -only regex:", err)
-		return nil
+		return nil, fmt.Errorf("Invalid -only regex: %v", err)
 	}
 	exclRE, err := parseRegexp(opt.ExclFuncs)
 	if err != nil {
-		fmt.Fprintln(out, "Invalid -excl regex:", err)
-		return nil
+		return nil, fmt.Errorf("Invalid -excl regex: %v", err)
 	}
 
 	templateParams := map[string]interface{}{}
@@ -78,14 +79,12 @@ func parseOptions(out io.Writer, opt *Options) *gotests.Options {
 	if jfile != "" {
 		buf, err := ioutil.ReadFile(jfile)
 		if err != nil {
-			fmt.Fprintf(out, "Failed to read from %s ,err %s", jfile, err)
-			return nil
+			return nil, fmt.Errorf("Failed to read from %s ,err %s", jfile, err)
 		}
 
 		err = json.Unmarshal(buf, &templateParams)
 		if err != nil {
-			fmt.Fprintf(out, "Failed to umarshal %s er %s", jfile, err)
-			return nil
+			return nil, fmt.Errorf("Failed to umarshal %s er %s", jfile, err)
 		}
 	}
 
@@ -100,7 +99,7 @@ func parseOptions(out io.Writer, opt *Options) *gotests.Options {
 		TemplateDir:    opt.TemplateDir,
 		TemplateParams: templateParams,
 		TemplateData:   opt.TemplateData,
-	}
+	}, nil
 }
 
 func parseRegexp(s string) (*regexp.Regexp, error) {
@@ -114,32 +113,38 @@ func parseRegexp(s string) (*regexp.Regexp, error) {
 	return re, nil
 }
 
-func generateTests(out io.Writer, path string, writeOutput bool, opt *gotests.Options) {
+func generateTests(out io.Writer, path string, writeOutput bool, opt *gotests.Options) error {
 	gts, err := gotests.GenerateTests(path, opt)
 	if err != nil {
-		fmt.Fprintln(out, err.Error())
-		return
+		return fmt.Errorf("generating tests: %v", err)
 	}
 	if len(gts) == 0 {
-		fmt.Fprintln(out, "No tests generated for", path)
-		return
+		return fmt.Errorf("no tests generated")
 	}
 	for _, t := range gts {
-		outputTest(out, t, writeOutput)
+		err := outputTest(out, t, writeOutput)
+		if err != nil {
+			return err
+		}
 	}
+	return nil
 }
 
-func outputTest(out io.Writer, t *gotests.GeneratedTest, writeOutput bool) {
+func outputTest(out io.Writer, t *gotests.GeneratedTest, writeOutput bool) error {
 	if writeOutput {
-		if err := ioutil.WriteFile(t.Path, t.Output, newFilePerm); err != nil {
-			fmt.Fprintln(out, err)
-			return
+		err := ioutil.WriteFile(t.Path, t.Output, newFilePerm)
+		if err != nil {
+			return fmt.Errorf("%s (-w): %v", t.Path, err)
 		}
 	}
 	for _, t := range t.Functions {
-		fmt.Fprintln(out, "Generated", t.TestName())
+		fmt.Fprintln(os.Stderr, "Generated", t.TestName())
 	}
 	if !writeOutput {
-		out.Write(t.Output)
+		_, err := out.Write(t.Output)
+		if err != nil {
+			return err
+		}
 	}
+	return nil
 }

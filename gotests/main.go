@@ -42,6 +42,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"os"
 
 	"github.com/maelvls/gotests/gotests/process"
@@ -74,7 +75,7 @@ func main() {
 	flag.Parse()
 	args := flag.Args()
 
-	process.Run(os.Stdout, args, &process.Options{
+	err := process.Run(os.Stdout, args, &process.Options{
 		OnlyFuncs:          *onlyFuncs,
 		ExclFuncs:          *exclFuncs,
 		ExportedFuncs:      *exportedFuncs,
@@ -87,6 +88,9 @@ func main() {
 		TemplateDir:        valOrGetenv(*templateDir, "GOTESTS_TEMPLATE_DIR"),
 		TemplateParamsPath: *templateParamsPath,
 	})
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%v\n", err)
+	}
 }
 
 func valOrGetenv(val, key string) string {

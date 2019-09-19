@@ -52,7 +52,10 @@ func Process(head *models.Header, funcs []*models.Function, opt *Options) ([]byt
 
 	out, err := imports.Process(tf.Name(), b.Bytes(), nil)
 	if err != nil {
-		return nil, fmt.Errorf("imports.Process: %v", err)
+		if os.Getenv("DEBUG_GENERATED") != "" {
+			fmt.Println(string(b.Bytes()))
+		}
+		return nil, fmt.Errorf("imports.Process: %v\nYou can set DEBUG_GENERATED=1 to print to stdout the intermediate generated code before it is gofmt'd.", err)
 	}
 	return out, nil
 }

@@ -47,13 +47,9 @@ func {{.TestName}}(t *testing.T) {
 			{{template "results" $f}} {{template "call" $f}}
 
 			{{- if .ReturnsError}}
-                {{if .OnlyReturnsError}}
-				    err := {{template "call" $f}}
-                {{end}}
                 if tt.wantErr != nil {
                     require.Error(t, err)
-                    assert.IsType(t, tt.wantErr, err)
-                    assert.Contains(t, err, tt.wantErr)
+                    assert.Equal(t, tt.wantErr, err)
                     {{- if .TestResults}}
 						{{if .Subtests }}return{{else}}continue{{end}}
 					{{- end}}

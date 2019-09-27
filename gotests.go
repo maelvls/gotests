@@ -107,6 +107,11 @@ func generateTest(src models.Path, files []models.Path, opt *Options) (*Generate
 	if err != nil {
 		return nil, fmt.Errorf("Parser.Parse source file: %v", err)
 	}
+
+	if len(sr.Funcs) == 0 {
+		return nil, fmt.Errorf("no functions found")
+	}
+
 	h := sr.Header
 	h.Code = nil // Code is only needed from parsed test files.
 	testPath := models.Path(src).TestPath()
@@ -116,7 +121,7 @@ func generateTest(src models.Path, files []models.Path, opt *Options) (*Generate
 	}
 	funcs := testableFuncs(sr.Funcs, opt.Only, opt.Exclude, opt.Exported, tf)
 	if len(funcs) == 0 {
-		return nil, nil
+		return nil, fmt.Errorf("nothing to generate, all functions are already tested")
 	}
 	b, err := output.Process(h, funcs, &output.Options{
 		PrintInputs:    opt.PrintInputs,

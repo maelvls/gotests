@@ -46,7 +46,7 @@ func Run(out io.Writer, args []string, opts *Options) error {
 	}
 	opt, err := parseOptions(opts)
 	if err != nil {
-		return fmt.Errorf("parsing flags: %v", err)
+		return err
 	}
 
 	if len(args) == 0 {

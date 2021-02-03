@@ -13,7 +13,7 @@ func TestFoo24(t *testing.T) {
 		x ast.Expr
 		t types.Type
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		args    args
 		wantErr bool

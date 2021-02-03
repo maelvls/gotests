@@ -9,7 +9,7 @@ func TestUndefined_Do(t *testing.T) {
 	type args struct {
 		es Something
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		u       *Undefined
 		args    args

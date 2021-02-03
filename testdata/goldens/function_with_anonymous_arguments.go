@@ -7,7 +7,7 @@ func TestFoo2(t *testing.T) {
 		in0 string
 		in1 int
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		args args
 	}{

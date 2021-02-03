@@ -9,7 +9,7 @@ func TestFoo23(t *testing.T) {
 	type args struct {
 		ch chan bool
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		args args
 		want chan string

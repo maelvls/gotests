@@ -9,7 +9,7 @@ func TestNot(t *testing.T) {
 	type args struct {
 		this *os.File
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		args args
 		want string

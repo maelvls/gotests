@@ -6,7 +6,7 @@ func Test_name_Name(t *testing.T) {
 	type args struct {
 		n string
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		n    name
 		args args
@@ -28,7 +28,7 @@ func TestName_Name1(t *testing.T) {
 	type args struct {
 		n string
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name   string
 		fields fields
 		args   args
@@ -53,7 +53,7 @@ func TestName_Name2(t *testing.T) {
 	type args struct {
 		name string
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name   string
 		fields fields
 		args   args
@@ -78,7 +78,7 @@ func TestName_Name3(t *testing.T) {
 	type args struct {
 		nn string
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name     string
 		fields   fields
 		args     args

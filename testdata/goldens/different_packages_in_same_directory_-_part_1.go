@@ -9,7 +9,7 @@ func TestBar_Bar(t *testing.T) {
 	type args struct {
 		s string
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		fields  fields
 		args    args

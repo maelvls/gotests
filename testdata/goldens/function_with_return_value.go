@@ -3,7 +3,7 @@ package testdata
 import "testing"
 
 func TestFoo4(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		want bool
 	}{

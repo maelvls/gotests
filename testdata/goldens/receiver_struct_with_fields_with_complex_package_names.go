@@ -14,7 +14,7 @@ func TestImporter_Foo35(t *testing.T) {
 	type args struct {
 		t types.Type
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name   string
 		fields fields
 		args   args

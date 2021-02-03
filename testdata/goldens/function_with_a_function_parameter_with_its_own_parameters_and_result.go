@@ -6,7 +6,7 @@ func TestFoo14(t *testing.T) {
 	type args struct {
 		f func(string, int) string
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		args    args
 		wantErr bool

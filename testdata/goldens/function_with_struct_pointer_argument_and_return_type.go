@@ -9,7 +9,7 @@ func TestFoo8(t *testing.T) {
 	type args struct {
 		b *Bar
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		args    args
 		want    *Bar

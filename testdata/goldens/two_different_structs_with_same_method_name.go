@@ -3,7 +3,7 @@ package testdata
 import "testing"
 
 func TestBook_Open(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		b       *Book
 		wantErr bool
@@ -19,7 +19,7 @@ func TestBook_Open(t *testing.T) {
 }
 
 func Test_door_Open(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		d       *door
 		wantErr bool
@@ -35,7 +35,7 @@ func Test_door_Open(t *testing.T) {
 }
 
 func Test_xml_Open(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		x       *xml
 		wantErr bool

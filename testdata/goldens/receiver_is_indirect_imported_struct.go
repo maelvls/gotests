@@ -3,7 +3,7 @@ package testdata
 import "testing"
 
 func Test_someIndirectImportedStruct_Foo037(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		smtg *someIndirectImportedStruct
 	}{

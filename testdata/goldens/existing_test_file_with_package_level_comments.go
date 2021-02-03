@@ -13,7 +13,7 @@ package testdata
 import "testing"
 
 func TestBeforeComment(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		want string
 	}{

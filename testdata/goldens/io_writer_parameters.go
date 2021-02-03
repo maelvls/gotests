@@ -6,7 +6,7 @@ import (
 )
 
 func TestBar_Write(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		b       *Bar
 		wantW   string
@@ -31,7 +31,7 @@ func TestWrite(t *testing.T) {
 	type args struct {
 		data string
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		args    args
 		wantW   string
@@ -55,7 +55,7 @@ func TestMultiWrite(t *testing.T) {
 	type args struct {
 		data string
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		args    args
 		want    int

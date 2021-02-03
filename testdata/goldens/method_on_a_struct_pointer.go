@@ -6,7 +6,7 @@ func TestBar_Foo7(t *testing.T) {
 	type args struct {
 		i int
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		b       *Bar
 		args    args

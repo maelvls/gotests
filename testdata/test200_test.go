@@ -10,7 +10,7 @@ import (
 )
 
 func TestFoo200(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		x    ast.Expr
 		t    types.Type

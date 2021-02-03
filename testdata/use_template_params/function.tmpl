@@ -21,7 +21,7 @@ func {{.TestName}}(t *testing.T) {
 		{{- end}}
 	}
 	{{- end}}
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		{{- with .Receiver}}
 			{{- if and .IsStruct .Fields}}

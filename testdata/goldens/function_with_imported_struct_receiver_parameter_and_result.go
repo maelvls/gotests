@@ -10,7 +10,7 @@ func TestFoo18(t *testing.T) {
 	type args struct {
 		t *os.File
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		args args
 		want *os.File

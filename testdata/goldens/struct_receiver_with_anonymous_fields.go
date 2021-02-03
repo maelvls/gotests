@@ -12,7 +12,7 @@ func TestDoctor_SayHello(t *testing.T) {
 	type args struct {
 		r *Person
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name   string
 		fields fields
 		args   args

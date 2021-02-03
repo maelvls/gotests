@@ -9,7 +9,7 @@ func TestFooFilter(t *testing.T) {
 	type args struct {
 		strs []string
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		args    args
 		want    []*Bar
@@ -33,7 +33,7 @@ func Test_bazFilter(t *testing.T) {
 	type args struct {
 		f *float64
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		args args
 		want float64

@@ -31,7 +31,7 @@ func TestReserved_DontFail(t *testing.T) {
 		Return      string
 		Var         string
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name   string
 		fields fields
 		want   string

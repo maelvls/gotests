@@ -6,7 +6,7 @@ func TestBar_BarFilter(t *testing.T) {
 	type args struct {
 		i interface{}
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		b       *Bar
 		args    args

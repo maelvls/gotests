@@ -6,7 +6,7 @@ import (
 )
 
 func TestCelsius_ToFahrenheit(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		c    Celsius
 		want Fahrenheit
@@ -24,7 +24,7 @@ func TestHourToSecond(t *testing.T) {
 	type args struct {
 		h time.Duration
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		args args
 		want time.Duration

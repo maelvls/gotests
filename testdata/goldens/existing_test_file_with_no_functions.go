@@ -11,7 +11,7 @@ func TestFoo102(t *testing.T) {
 	type args struct {
 		s string
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		args args
 		want string

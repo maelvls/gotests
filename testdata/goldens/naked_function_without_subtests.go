@@ -3,7 +3,7 @@ package testdata
 import "testing"
 
 func Test_main(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 	}{
 		// TODO: Add test cases.
@@ -14,7 +14,7 @@ func Test_main(t *testing.T) {
 }
 
 func Test_do(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 	}{
 		// TODO: Add test cases.

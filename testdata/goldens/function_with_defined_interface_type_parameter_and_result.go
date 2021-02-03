@@ -9,7 +9,7 @@ func TestFoo16(t *testing.T) {
 	type args struct {
 		in Bazzar
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		args args
 		want Bazzar

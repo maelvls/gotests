@@ -8,7 +8,7 @@ import (
 )
 
 func TestFoo200(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		x    ast.Expr
 		t    types.Type
@@ -27,7 +27,7 @@ func TestBar200(t *testing.T) {
 	type args struct {
 		t types.Type
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		args args
 		want string

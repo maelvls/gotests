@@ -3,7 +3,7 @@ package testdata
 import "testing"
 
 func TestSameName(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		want    int
 		wantErr bool
@@ -25,7 +25,7 @@ func TestSameName(t *testing.T) {
 }
 
 func Test_sameName(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		want    int
 		wantErr bool
@@ -47,7 +47,7 @@ func Test_sameName(t *testing.T) {
 }
 
 func TestSameTypeName_SameName(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		tr      *SameTypeName
 		want    int
@@ -71,7 +71,7 @@ func TestSameTypeName_SameName(t *testing.T) {
 }
 
 func TestSameTypeName_sameName(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		tr      *SameTypeName
 		want    int
@@ -95,7 +95,7 @@ func TestSameTypeName_sameName(t *testing.T) {
 }
 
 func Test_sameTypeName_SameName(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		tr      *sameTypeName
 		want    int
@@ -119,7 +119,7 @@ func Test_sameTypeName_SameName(t *testing.T) {
 }
 
 func Test_sameTypeName_sameName(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		tr      *sameTypeName
 		want    int

@@ -3,7 +3,7 @@ package testdata
 import "testing"
 
 func TestCelsius_String(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		c    Celsius
 		want string
@@ -18,7 +18,7 @@ func TestCelsius_String(t *testing.T) {
 }
 
 func TestFahrenheit_String(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		f    Fahrenheit
 		want string

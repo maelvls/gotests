@@ -6,7 +6,7 @@ import (
 )
 
 func TestBarBar100(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		b       *Bar
 		i       interface{}
@@ -26,7 +26,7 @@ func TestBarBar100(t *testing.T) {
 }
 
 func TestBaz100(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		f    *float64
 		want float64
@@ -49,7 +49,7 @@ func TestFoo100(t *testing.T) {
 	type args struct {
 		strs []string
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		args    args
 		want    []*Bar
@@ -73,7 +73,7 @@ func TestBar_Bar100(t *testing.T) {
 	type args struct {
 		i interface{}
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name    string
 		b       *Bar
 		args    args
@@ -93,7 +93,7 @@ func Test_baz100(t *testing.T) {
 	type args struct {
 		f *float64
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		args args
 		want float64

@@ -6,7 +6,7 @@ import (
 )
 
 func TestBar_Foo9(t *testing.T) {
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		b    Bar
 		want Bar

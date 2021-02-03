@@ -9,7 +9,7 @@ func TestFoo21(t *testing.T) {
 	type args struct {
 		i interface{}
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		args args
 		want interface{}

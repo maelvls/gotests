@@ -6,7 +6,7 @@ func Test_initFuncStruct_init(t *testing.T) {
 	type fields struct {
 		field int
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name   string
 		fields fields
 		want   int
@@ -27,7 +27,7 @@ func Test_initFieldStruct_getInit(t *testing.T) {
 	type fields struct {
 		init int
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name   string
 		fields fields
 		want   int

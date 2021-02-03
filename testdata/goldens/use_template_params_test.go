@@ -8,7 +8,7 @@ func TestDo(t *testing.T) {
 		a    int
 		name string
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name string
 		args args
 	}{

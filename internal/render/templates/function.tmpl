@@ -2,56 +2,38 @@
 {{- $f := .}}
 
 func {{.TestName}}(t *testing.T) {
-	{{- with .Receiver}}
-		{{- if .IsStruct}}
-			{{- if .Fields}}
-				type fields struct {
+	testCases := map[string]struct {
+		{{- with .Receiver}}
+		    {{- if .Fields}}
 				{{- range .Fields}}
 					{{Field .}} {{.Type}}
 				{{- end}}
-				}
 			{{- end}}
-		{{- end}}
-	{{- end}}
-	{{- if .TestParameters}}
-	type args struct {
-		{{- range .TestParameters}}
-				{{Param .}} {{.Type}}
-		{{- end}}
-	}
-	{{- end}}
-	tests := []struct {
-		name string
-		{{- with .Receiver}}
-			{{- if and .IsStruct .Fields}}
-				fields fields
-			{{- else}}
-				{{Receiver .}} {{.Type}}
-			{{- end}}
-		{{- end}}
-		{{- if .TestParameters}}
-			args args
-		{{- end}}
+	    {{- end}}
+        {{- if .TestParameters}}
+            {{- range .TestParameters}}
+                    {{Param .}} {{.Type}}
+            {{- end}}
+        {{- end}}
 		{{- range .TestResults}}
 			{{Want .}} {{.Type}}
 		{{- end}}
 		{{- if .ReturnsError}}
-			wantErr bool
+			wantErr error
 		{{- end}}
 	}{
 		// TODO: Add test cases.
 	}
-	for {{if (or .Subtests (not .IsNaked))}} _, tt := {{end}} range tests {
-		{{- if .Subtests}}
+	for {{if (or .Subtests (not .IsNaked))}} name, tt := {{end}} range testCases {
+        {{- if .Subtests }}
 		{{- if .Parallel}}tt := tt{{end}}
-		t.Run(tt.name, func(t *testing.T) {
+		t.Run(name, func(t *testing.T) { {{- end -}}
 			{{- if .Parallel}}t.Parallel(){{end}}
-		{{- end}}
 			{{- with .Receiver}}
 				{{- if .IsStruct}}
 					{{Receiver .}} := {{if .Type.IsStar}}&{{end}}{{.Type.Value}}{
 					{{- range .Fields}}
-						{{.Name}}: tt.fields.{{Field .}},
+						{{.Name}}: tt.{{Field .}},
 					{{- end}}
 					}
 				{{- end}}
@@ -61,27 +43,29 @@ func {{.TestName}}(t *testing.T) {
 					{{Param .}} := &bytes.Buffer{}
 				{{- end}}
 			{{- end}}
-			{{- if and (not .OnlyReturnsError) (not .OnlyReturnsOneValue) }}
-				{{template "results" $f}} {{template "call" $f}}
-			{{- end}}
+
+			{{template "results" $f}} {{template "call" $f}}
+
 			{{- if .ReturnsError}}
-				if {{if .OnlyReturnsError}} err := {{template "call" $f}}; {{end}} (err != nil) != tt.wantErr {
-					t.Errorf("{{template "message" $f}} error = %v, wantErr %v", {{template "inputs" $f}} err, tt.wantErr)
-					{{- if .TestResults}}
+                {{if .OnlyReturnsError}}
+				    err := {{template "call" $f}}
+                {{end}}
+                if tt.wantErr != nil {
+                    require.Error(t, err)
+                    assert.IsType(t, tt.wantErr, err)
+                    assert.Contains(t, err, tt.wantErr)
+                    {{- if .TestResults}}
 						{{if .Subtests }}return{{else}}continue{{end}}
 					{{- end}}
-				}
+                }
+				require.NoError(t, err)
+
 			{{- end}}
 			{{- range .TestResults}}
 				{{- if .IsWriter}}
-					if {{Got .}} := {{Param .}}.String(); {{Got .}} != tt.{{Want .}} {
-				{{- else if .IsBasicType}}
-					if {{if $f.OnlyReturnsOneValue}}{{Got .}} := {{template "inline" $f}}; {{end}} {{Got .}} != tt.{{Want .}} {
-				{{- else}}
-					if {{if $f.OnlyReturnsOneValue}}{{Got .}} := {{template "inline" $f}}; {{end}} !reflect.DeepEqual({{Got .}}, tt.{{Want .}}) {
+				    {{Got .}} := {{Param .}}.String()
 				{{- end}}
-				t.Errorf("{{template "message" $f}} {{if $f.ReturnsMultiple}}{{Got .}} {{end}}= %v, want %v", {{template "inputs" $f}} {{Got .}}, tt.{{Want .}})
-				}
+				assert.Equal(t, tt.{{Want .}}, {{Got .}})
 			{{- end}}
 		{{- if .Subtests }} }) {{- end -}}
 	}

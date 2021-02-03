@@ -13,6 +13,8 @@ import (
 	"testing"
 	"unicode"
 
+	"github.com/stretchr/testify/assert"
+
 	"golang.org/x/tools/imports"
 )
 
@@ -780,7 +782,8 @@ func TestGenerateTests(t *testing.T) {
 			continue
 		}
 		if got := string(gts[0].Output); got != tt.want {
-			t.Errorf("%q. GenerateTests(%v) = \n%v, want \n%v", tt.name, tt.args.srcPath, got, tt.want)
+			assert.Equal(t, tt.want, got, "%v: %s", tt.name, tt.args.srcPath)
+			// t.Errorf("%q. GenerateTests(%v) = \n%v, want \n%v", tt.name, tt.args.srcPath, got, tt.want)
 			outputResult(t, tmp, tt.name, gts[0].Output)
 		}
 	}
